@@ -18,7 +18,8 @@ func tapBtn(_ soundName: String) {
 }
 
 struct ContentView: View {
-    let fruits = ["りんご", "オレンジ", "バナナ"]
+    
+    
     let sound1 = ["CD01",
                   "CD03",
                   "CD04",
@@ -89,55 +90,65 @@ struct ContentView: View {
                   "CD02-15",
                   "CD02-16",]
     
+    @State var soundText : String = "请选择播放"
+    
     var body: some View {
-        List {
-            Button(
-                action:{
-                    player?.play()
-                },label:{
-                    
-                    Text("播放")
-                }
-            )
-            Button(
-                action:{
-                    player?.stop()
-                },label:{
-                    
-                    Text("暂停")
-                }
-            )
-            Section(header: Text("上册")){
-                ForEach(0 ..< sound1.count) { index in
-                    
-                    Button(
-                        action:{
-                            tapBtn(sound1[index])
-                        },label:{
-                            
+        VStack {
+            HStack {
+                Button(
+                    action:{
+                        player?.play()
+                    },label:{
+                        
+                        Text("播放")
+                    }
+                ).padding(.all, 5)
+                Text(soundText).padding(.all, 5)
+                Button(
+                    action:{
+                        player?.stop()
+                    },label:{
+                        
+                        Text("暂停")
+                    }
+                ).padding(.all, 5)
+            }
+            List {
+                Section(header: Text("上册")){
+                    ForEach(0 ..< sound1.count) { index in
+                        
+                        Button(
+                            action:{
+                                tapBtn(sound1[index])
+                                soundText = sound1[index]
+                            },label:{
+                                
                                 Text(sound1[index])
-                        }
-                    )
+                            }
+                        )
+                    }
                 }
-            }
-            Section(header: Text("下册")) {
-                ForEach(0 ..< sound2.count) { index in
-                    
-                    Button(
-                        action:{
-                            tapBtn(sound2[index])
-                        },label:{
-                            
+                Section(header: Text("下册")) {
+                    ForEach(0 ..< sound2.count) { index in
+                        
+                        Button(
+                            action:{
+                                tapBtn(sound2[index])
+                                soundText = sound2[index]
+                            },label:{
+                                
                                 Text(sound2[index])
-                        }
-                    )
+                            }
+                        )
+                    }
                 }
             }
+            .listStyle(SidebarListStyle())
         }
-        .listStyle(SidebarListStyle())
+        
     }
 }
- 
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
